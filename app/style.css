@@ -1,0 +1,55 @@
+/* Nexus-Cortex Laboratory Light Theme (High Contrast) */
+
+.stApp {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Sidebar Styling */
+[data-testid="stSidebar"] {
+    background-color: #f8fafc;
+    border-right: 1px solid #e2e8f0;
+}
+
+/* Metric Cards Custom Styling (Enforce Black Text) */
+div[data-testid="stMetricValue"] {
+    color: #000000 !important;
+    font-weight: 800 !important;
+}
+
+div[data-testid="stMetricLabel"] {
+    color: #000000 !important;
+    font-weight: 600 !important;
+}
+
+/* Plotly Chart Container High Contrast */
+.js-plotly-plot {
+    border: 1px solid #f1f5f9;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+/* Custom Alert Styling */
+.stAlert {
+    border: 1px solid #e2e8f0;
+    color: #000000;
+}
+
+/* Enforce black text for all headers and paragraphs in the light theme */
+h1, h2, h3, h4, h5, h6, p, span, li, div {
+    color: #000000 !important;
+}
+
+/* Override for st.info and st.caption to ensure readability on white backgrounds */
+.stCaption {
+    color: #475569 !important;
+}
+
+.stMarkdown {
+    color: #000000 !important;
+}
+
+/* Tooltip and Help colors */
+.stTooltipIcon {
+    color: #000000 !important;
+}

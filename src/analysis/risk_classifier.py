@@ -51,15 +51,19 @@ CRISIS_KEYWORDS = [
 
 
 def load_and_label() -> pd.DataFrame:
-    """Load reviews and engineer the binary risk label."""
+    """Load reviews and engineer the binary risk label.
+    
+    Using rating <= 2 as the ground truth for High-Risk, independent of
+    the 'sentiment' metadata to avoid circular leakage (label leakage).
+    """
     if not DATA_PATH.exists():
         raise FileNotFoundError(f"Dataset not found: {DATA_PATH}")
 
     df = pd.read_parquet(DATA_PATH)
-    # High-risk: low rating AND negative sentiment
-    df['is_high_risk'] = ((df['rating'] <= 3) & (df['sentiment'] == 'negative')).astype(int)
+    # High-risk: strictly low rating (independent of sentiment to avoid bias)
+    df['is_high_risk'] = (df['rating'] <= 2).astype(int)
 
-    logger.info(f"Dataset: {len(df)} reviews | High-risk: {df['is_high_risk'].sum()} ({df['is_high_risk'].mean()*100:.1f}%)")
+    logger.info(f"Dataset: {len(df)} reviews | High-risk (Rating <= 2): {df['is_high_risk'].sum()} ({df['is_high_risk'].mean()*100:.1f}%)")
     return df
 
 
@@ -108,6 +112,10 @@ def train_all_classifiers(df: pd.DataFrame) -> dict:
         ('tfidf', TfidfVectorizer(max_features=5000, ngram_range=(1, 2), stop_words='english')),
         ('clf', LogisticRegression(max_iter=1000, class_weight='balanced', random_state=42)),
     ])
+    
+    # 5-Fold Stratified Cross-Validation
+    cv_scores_lr = cross_val_score(pipe_lr, X_train_text, y_train, cv=5, scoring='f1_weighted')
+    
     pipe_lr.fit(X_train_text, y_train)
     y_pred_lr = pipe_lr.predict(X_test_text)
     results['TF-IDF + Logistic Regression'] = {
@@ -115,6 +123,8 @@ def train_all_classifiers(df: pd.DataFrame) -> dict:
         'precision': round(precision_score(y_test, y_pred_lr, zero_division=0), 4),
         'recall': round(recall_score(y_test, y_pred_lr, zero_division=0), 4),
         'f1': round(f1_score(y_test, y_pred_lr, zero_division=0), 4),
+        'cv_mean': round(float(cv_scores_lr.mean()), 4),
+        'cv_std': round(float(cv_scores_lr.std()), 4),
         'confusion_matrix': confusion_matrix(y_test, y_pred_lr).tolist(),
         'type': 'ML',
     }
@@ -137,6 +147,9 @@ def train_all_classifiers(df: pd.DataFrame) -> dict:
         ('tfidf', TfidfVectorizer(max_features=5000, ngram_range=(1, 2), stop_words='english')),
         ('clf', LinearSVC(class_weight='balanced', max_iter=2000, random_state=42)),
     ])
+    
+    cv_scores_svm = cross_val_score(pipe_svm, X_train_text, y_train, cv=5, scoring='f1_weighted')
+    
     pipe_svm.fit(X_train_text, y_train)
     y_pred_svm = pipe_svm.predict(X_test_text)
     results['TF-IDF + SVM'] = {
@@ -144,6 +157,8 @@ def train_all_classifiers(df: pd.DataFrame) -> dict:
         'precision': round(precision_score(y_test, y_pred_svm, zero_division=0), 4),
         'recall': round(recall_score(y_test, y_pred_svm, zero_division=0), 4),
         'f1': round(f1_score(y_test, y_pred_svm, zero_division=0), 4),
+        'cv_mean': round(float(cv_scores_svm.mean()), 4),
+        'cv_std': round(float(cv_scores_svm.std()), 4),
         'confusion_matrix': confusion_matrix(y_test, y_pred_svm).tolist(),
         'type': 'ML',
     }
@@ -160,7 +175,11 @@ def train_all_classifiers(df: pd.DataFrame) -> dict:
         logger.info("  Encoding test set...")
         X_test_emb = model.encode(X_test_text.tolist(), show_progress_bar=True, batch_size=64)
 
+        from sklearn.model_selection import StratifiedKFold
+        skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
         clf_emb = LogisticRegression(max_iter=1000, class_weight='balanced', random_state=42)
+        cv_scores_emb = cross_val_score(clf_emb, X_train_emb, y_train, cv=skf, scoring='f1_weighted')
+
         clf_emb.fit(X_train_emb, y_train)
         y_pred_emb = clf_emb.predict(X_test_emb)
 
@@ -169,6 +188,8 @@ def train_all_classifiers(df: pd.DataFrame) -> dict:
             'precision': round(precision_score(y_test, y_pred_emb, zero_division=0), 4),
             'recall': round(recall_score(y_test, y_pred_emb, zero_division=0), 4),
             'f1': round(f1_score(y_test, y_pred_emb, zero_division=0), 4),
+            'cv_mean': round(float(cv_scores_emb.mean()), 4),
+            'cv_std': round(float(cv_scores_emb.std()), 4),
             'confusion_matrix': confusion_matrix(y_test, y_pred_emb).tolist(),
             'type': 'Deep Learning',
         }

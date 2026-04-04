@@ -1,69 +1,75 @@
 {
   "benchmark": {
     "Rule-Based Lexicon": {
-      "accuracy": 0.7694,
-      "precision": 0.8889,
-      "recall": 0.058,
-      "f1": 0.1088,
+      "accuracy": 0.8838,
+      "precision": 0.625,
+      "recall": 0.0735,
+      "f1": 0.1316,
       "confusion_matrix": [
         [
-          429,
-          1
+          497,
+          3
         ],
         [
-          130,
-          8
+          63,
+          5
         ]
       ],
       "type": "Heuristic"
     },
     "TF-IDF + Logistic Regression": {
-      "accuracy": 1.0,
-      "precision": 1.0,
+      "accuracy": 0.8732,
+      "precision": 0.4857,
       "recall": 1.0,
-      "f1": 1.0,
+      "f1": 0.6538,
+      "cv_mean": 0.8929,
+      "cv_std": 0.0077,
       "confusion_matrix": [
         [
-          430,
-          0
+          428,
+          72
         ],
         [
           0,
-          138
+          68
         ]
       ],
       "type": "ML"
     },
     "TF-IDF + SVM": {
-      "accuracy": 1.0,
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1": 1.0,
+      "accuracy": 0.8715,
+      "precision": 0.4806,
+      "recall": 0.9118,
+      "f1": 0.6294,
+      "cv_mean": 0.8938,
+      "cv_std": 0.0075,
       "confusion_matrix": [
         [
-          430,
-          0
+          433,
+          67
         ],
         [
-          0,
-          138
+          6,
+          62
         ]
       ],
       "type": "ML"
     },
     "MiniLM Embedding + LR": {
-      "accuracy": 1.0,
-      "precision": 1.0,
+      "accuracy": 0.8732,
+      "precision": 0.4857,
       "recall": 1.0,
-      "f1": 1.0,
+      "f1": 0.6538,
+      "cv_mean": 0.8938,
+      "cv_std": 0.0166,
       "confusion_matrix": [
         [
-          430,
-          0
+          428,
+          72
         ],
         [
           0,
-          138
+          68
         ]
       ],
       "type": "Deep Learning"
@@ -72,83 +78,83 @@
   "feature_importance": [
     {
       "feature": "worse",
-      "importance": 3.6693
-    },
-    {
-      "feature": "battling",
-      "importance": 2.8018
-    },
-    {
-      "feature": "weeks battling",
-      "importance": 2.8018
-    },
-    {
-      "feature": "unbearable stop",
-      "importance": 2.8018
-    },
-    {
-      "feature": "unbearable",
-      "importance": 2.8018
+      "importance": 2.8296
     },
     {
       "feature": "stop",
-      "importance": 2.8018
+      "importance": 2.0798
     },
     {
-      "feature": "experience",
-      "importance": 2.5826
+      "feature": "battling",
+      "importance": 2.0798
     },
     {
-      "feature": "worse constant",
-      "importance": 2.5826
+      "feature": "weeks battling",
+      "importance": 2.0798
     },
     {
-      "feature": "constant",
-      "importance": 2.5826
+      "feature": "unbearable",
+      "importance": 2.0798
     },
     {
-      "feature": "terrible experience",
-      "importance": 2.5826
-    },
-    {
-      "feature": "great",
-      "importance": -2.4805
-    },
-    {
-      "feature": "using",
-      "importance": -2.4805
-    },
-    {
-      "feature": "great terrible",
-      "importance": -2.4805
+      "feature": "unbearable stop",
+      "importance": 2.0798
     },
     {
       "feature": "weeks great",
-      "importance": -2.4805
+      "importance": -1.9559
     },
     {
-      "feature": "trusted",
-      "importance": 2.378
+      "feature": "great",
+      "importance": -1.9559
     },
     {
-      "feature": "want relapse",
-      "importance": 2.378
+      "feature": "great terrible",
+      "importance": -1.9559
     },
     {
-      "feature": "trusted doctor",
-      "importance": 2.378
+      "feature": "using",
+      "importance": -1.9559
     },
     {
-      "feature": "relapse",
-      "importance": 2.378
+      "feature": "terrible experience",
+      "importance": 1.9552
+    },
+    {
+      "feature": "worse constant",
+      "importance": 1.9552
+    },
+    {
+      "feature": "experience",
+      "importance": 1.9552
+    },
+    {
+      "feature": "constant",
+      "importance": 1.9552
     },
     {
       "feature": "doctor",
-      "importance": 2.378
+      "importance": 1.8436
+    },
+    {
+      "feature": "relapse",
+      "importance": 1.8436
+    },
+    {
+      "feature": "want relapse",
+      "importance": 1.8436
+    },
+    {
+      "feature": "trusted doctor",
+      "importance": 1.8436
+    },
+    {
+      "feature": "trusted",
+      "importance": 1.8436
     },
     {
       "feature": "want",
-      "importance": 2.378
+      "importance": 1.8436
     }
   ],
   "risk_classification": [
@@ -160,21 +166,21 @@
     },
     {
       "Risk Level": "Medium",
-      "Count": 1030,
-      "Percentage": 36.3,
+      "Count": 1032,
+      "Percentage": 36.4,
       "Description": "Ongoing treatment / mixed signals"
     },
     {
       "Risk Level": "High",
-      "Count": 692,
-      "Percentage": 24.4,
+      "Count": 690,
+      "Percentage": 24.3,
       "Description": "Active crisis / withdrawal distress"
     }
   ],
   "dataset_stats": {
     "total_reviews": 2838,
-    "high_risk_count": 692,
-    "high_risk_pct": 24.4,
+    "high_risk_count": 340,
+    "high_risk_pct": 12.0,
     "train_size": 2270,
     "test_size": 568
   }

@@ -1,103 +1,109 @@
-# Substance-Related Risk Signals: NSF NRT Prototype
+# 🧠 Nexus-Cortex: Substance Abuse & Economic Intelligence
 
-An advanced public health surveillance demonstration dashboard combining **CDC overdose trends** with **multi-method NLP pipelines**. This prototype showcases the integration of rule-based systems, traditional Machine Learning (ML), Deep Learning (DL), and local **Retrieval-Augmented Generation (RAG)** using local Large Language Models (LLMs).
+An advanced public health surveillance platform designed for the **NSF NRT Project**. Nexus-Cortex fuses **CDC provisional mortality data** with **unstructured clinical patient narratives** to deliver a high-fidelity intelligence suite for drug and alcohol risk detection.
 
 ---
 
-## System Architecture
+## 🏛️ System Architecture
+
+Nexus-Cortex uses a **Fusion-RAG** (Retrieval-Augmented Generation) architecture to ground AI reasoning in real-world clinical and evidence-based data.
 
 ```mermaid
 graph TB
-    subgraph UI ["Streamlit Frontend (app/)"]
-        Dashboard["Dashboard UI"]
-        Analytics_UI["Analytics Dashboards"]
+    subgraph UI ["Presentation Layer (app/)"]
+        Dashboard["Streamlit Intelligence Hub"]
+        Modules["6 Core Analytical Modules"]
     end
 
-    subgraph Core ["Core Intelligence (src/core/)"]
-        RAG_Engine["RAG Engine (Qwen2.5)"]
-        TFIDF_Model["TF-IDF Classifier"]
+    subgraph Intelligence ["Intelligence Layer (src/core/ & src/analysis/)"]
+        Cortex1["Cortex-1 Agent (Llama3/Ollama)"]
+        FusionRAG["Fusion-RAG Engine (ChromaDB)"]
+        Classifiers["Risk Classifier Pipeline (TF-IDF/MiniLM)"]
+        Temporal["Temporal Spike Engine (Z-Score)"]
     end
 
-    subgraph Analysis ["Analytics & Insights (src/analysis/)"]
-        Temporal["Temporal Analysis"]
-        Comparison["Method Benchmarking"]
-        Narrative["LLM Narrative Summaries"]
+    subgraph Data ["Data Layer (data/processed/)"]
+        Clinical["Patient Reviews (2,838 records)"]
+        Mortality["CDC Mortality Hotspots"]
+        Economic["Financial Impact Data ($2.7T)"]
     end
 
-    subgraph Processing ["Data Management (src/data_processing/)"]
-        CDC_Fetcher["CDC API Client"]
-        Corpus_Loader["Corpus Utilities"]
-    end
-
-    subgraph Data ["Data Layer (data/)"]
-        CDC_Data[("CDC Trends Data")]
-        Social_Corpus[("Social Signal Corpus")]
-    end
-
-    %% Data Flow
-    CDC_Data --> CDC_Fetcher
-    Social_Corpus --> Corpus_Loader
-    
-    CDC_Fetcher --> Analytics_UI
-    Corpus_Loader --> Core
-    Corpus_Loader --> Comparison
-
-    TFIDF_Model --> Analytics_UI
-    RAG_Engine --> Dashboard
-    Temporal --> Analytics_UI
-    Comparison --> Dashboard
-    Narrative --> Dashboard
+    %% Interactions
+    Data --> FusionRAG
+    FusionRAG --> Cortex1
+    Classifiers --> Modules
+    Temporal --> Modules
+    Cortex1 --> Dashboard
+    Modules --> Dashboard
 ```
 
 ---
 
-## Features
+## 📂 Project Structure
 
-- **Multi-Model Comparison**: Evaluates Lexicon, TF-IDF (Logistic Regression, Random Forest, SVM), and Sentence Embeddings on a stratified hold-out set.
-- **RAG Risk Analysis**: Uses a local **Qwen2.5-0.5B** model to analyze queries by retrieving context from the social signal corpus.
-- **Temporal Analysis**: Detects spikes in distress and substance mentions with automated **LLM-powered narrative summaries**.
-- **Evidence Retrieval**: Highlights token impact and retrieves similar historical cases for transparency.
-- **Public Health Integration**: Visualizes CDC provisional overdose trends alongside synthetic social media surveillance.
+```text
+.
+├── app/
+│   ├── streamlit_app.py          # Main Intelligence Dashboard entry point
+│   └── style.css                 # Professional "Laboratory Light" design system
+├── data/
+│   ├── chroma_db/                # Local Vector Database (ChromaDB)
+│   └── processed/                # Refined Parquet & JSON artifacts
+├── report/
+│   └── NSF_NRT_Final_Report.md   # Comprehensive 5-page research report
+├── src/
+│   ├── core/
+│   │   ├── agent_model.py        # Cortex-1 Agent orchestration
+│   │   └── rag_engine.py         # Multi-source Fusion-RAG logic
+│   ├── analysis/
+│   │   ├── risk_classifier.py    # ML training (Rule-Based, TF-IDF, SVM, MiniLM)
+│   │   ├── temporal_behavioral.py # Real-time spike and intensity tracking
+│   │   ├── early_warning.py      # Clinical distress triage
+│   │   └── economic_impact.py    # Societal burden modeling
+│   └── data_processing/
+│       ├── drug_review_etl.py    # Clinical dataset processing
+│       └── cdc_data.py           # CDC API & mortality integration
+└── requirements.txt              # Project dependencies
+```
 
 ---
 
-## Setup & Run
+## 🔬 Core Research Modules
 
-### 1. Environment Setup
-Requires Python 3.10+ and 8GB+ RAM.
+- **Risk Signal Detection**: Implements a 4-approach competitive pipeline (Lexicon, TF-IDF+LR, TF-IDF+SVM, and MiniLM Embeddings) to identify high-risk clinical events.
+- **Temporal Dynamics**: Uses Z-score anomalous detection to identify "spikes" in community distress and tracks risk intensity trends across substance classes (Opioids, Alcohol, Stimulants).
+- **Explainable Reasoning**: The **Cortex-1** agent provides auditable reasoning by retrieving and citing specific clinical reviews and mortality data points through its evidence panel.
+- **Economic Intelligence**: Models the **$2.7 Trillion** societal burden, breaking down healthcare costs vs. productivity losses.
+
+---
+
+## 🚀 Setup & Execution
+
+### 1. Environment
+Requires Python 3.10+ and a local instance of [Ollama](https://ollama.com/) running.
 
 ```bash
-cd "/Users/kukulad/Desktop/NSF_NRT Project"
+# Setup venv
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2. Launch the Dashboard
+### 2. Run Dashboard
 ```bash
 streamlit run app/streamlit_app.py
 ```
 
-*Note: The first run will download approx. 1GB for the local model (Qwen2.5-0.5B) and MiniLM embeddings.*
+> [!TIP]
+> Use the **"Re-index Fusion-RAG"** button in the sidebar upon first run to initialize the local vector database.
 
 ---
 
-## Project Layout
+## ⚖️ Ethics & Governance
 
-| Path | Purpose |
-|------|---------|
-| `app/streamlit_app.py` | Main Streamlit dashboard UI |
-| `src/core/` | Core engines: RAG orchestration and TF-IDF models |
-| `src/analysis/` | Analytics: Spikes, weekly trends, and method benchmarking |
-| `src/data_processing/` | Data handling: CDC API clients and corpus utilities |
-| `src/utils/` | Shared utilities: Embeddings, rules, and data splitting |
-| `data/` | Data assets: Social signal corpus and local cache |
-| `tests/` | Unit and integration testing suites |
-| `requirements.txt` | Project dependencies |
+This is a **clinical intelligence prototype** developed for research purposes.
+- **Safety**: The models are trained on real-world patient testimonials but are provided for surveillance analysis, not diagnosis.
+- **Crisis Support**: If you or someone you know is in crisis, call or text **988** in the US/Canada.
 
 ---
-
-## Ethics & Governance
-
-This is a **methodological prototype** using synthetic text. It is NOT a diagnostic tool. In clinical or live environments, strict governance and human-in-the-loop validation are required. 
-- US Crisis Resource: **988**
+**Nexus-Cortex 2.0** | *Advancing Clinical Intelligence for Public Health*

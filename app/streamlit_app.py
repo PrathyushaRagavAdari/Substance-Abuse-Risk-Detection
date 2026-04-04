@@ -77,9 +77,15 @@ with st.sidebar:
     local_model = st.selectbox("Reasoning Engine", ["llama3", "mistral", "cortex-1"], index=0)
 
     if "agent" not in st.session_state or st.session_state.get("last_model") != local_model:
-        st.session_state.agent = SubstanceRiskAgent(model_name=local_model)
-        st.session_state.last_model = local_model
-        st.sidebar.success("Cortex-1: Fusion-Active")
+        try:
+            st.session_state.agent = SubstanceRiskAgent(model_name=local_model)
+            st.session_state.last_model = local_model
+            st.sidebar.success("Cortex-1: Fusion-Active")
+        except Exception as e:
+            st.sidebar.warning(f"Agent init deferred: {type(e).__name__}")
+            st.session_state.agent = None
+            st.session_state.last_model = local_model
+
 
     st.sidebar.divider()
     if st.sidebar.button("🔄 Re-index Fusion-RAG", help="Re-embeds all clinical data into ChromaDB."):

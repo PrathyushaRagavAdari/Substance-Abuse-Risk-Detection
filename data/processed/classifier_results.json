@@ -1,0 +1,181 @@
+{
+  "benchmark": {
+    "Rule-Based Lexicon": {
+      "accuracy": 0.7694,
+      "precision": 0.8889,
+      "recall": 0.058,
+      "f1": 0.1088,
+      "confusion_matrix": [
+        [
+          429,
+          1
+        ],
+        [
+          130,
+          8
+        ]
+      ],
+      "type": "Heuristic"
+    },
+    "TF-IDF + Logistic Regression": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "confusion_matrix": [
+        [
+          430,
+          0
+        ],
+        [
+          0,
+          138
+        ]
+      ],
+      "type": "ML"
+    },
+    "TF-IDF + SVM": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "confusion_matrix": [
+        [
+          430,
+          0
+        ],
+        [
+          0,
+          138
+        ]
+      ],
+      "type": "ML"
+    },
+    "MiniLM Embedding + LR": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "confusion_matrix": [
+        [
+          430,
+          0
+        ],
+        [
+          0,
+          138
+        ]
+      ],
+      "type": "Deep Learning"
+    }
+  },
+  "feature_importance": [
+    {
+      "feature": "worse",
+      "importance": 3.6693
+    },
+    {
+      "feature": "battling",
+      "importance": 2.8018
+    },
+    {
+      "feature": "weeks battling",
+      "importance": 2.8018
+    },
+    {
+      "feature": "unbearable stop",
+      "importance": 2.8018
+    },
+    {
+      "feature": "unbearable",
+      "importance": 2.8018
+    },
+    {
+      "feature": "stop",
+      "importance": 2.8018
+    },
+    {
+      "feature": "experience",
+      "importance": 2.5826
+    },
+    {
+      "feature": "worse constant",
+      "importance": 2.5826
+    },
+    {
+      "feature": "constant",
+      "importance": 2.5826
+    },
+    {
+      "feature": "terrible experience",
+      "importance": 2.5826
+    },
+    {
+      "feature": "great",
+      "importance": -2.4805
+    },
+    {
+      "feature": "using",
+      "importance": -2.4805
+    },
+    {
+      "feature": "great terrible",
+      "importance": -2.4805
+    },
+    {
+      "feature": "weeks great",
+      "importance": -2.4805
+    },
+    {
+      "feature": "trusted",
+      "importance": 2.378
+    },
+    {
+      "feature": "want relapse",
+      "importance": 2.378
+    },
+    {
+      "feature": "trusted doctor",
+      "importance": 2.378
+    },
+    {
+      "feature": "relapse",
+      "importance": 2.378
+    },
+    {
+      "feature": "doctor",
+      "importance": 2.378
+    },
+    {
+      "feature": "want",
+      "importance": 2.378
+    }
+  ],
+  "risk_classification": [
+    {
+      "Risk Level": "Low",
+      "Count": 1116,
+      "Percentage": 39.3,
+      "Description": "Stable recovery / positive outcomes"
+    },
+    {
+      "Risk Level": "Medium",
+      "Count": 1030,
+      "Percentage": 36.3,
+      "Description": "Ongoing treatment / mixed signals"
+    },
+    {
+      "Risk Level": "High",
+      "Count": 692,
+      "Percentage": 24.4,
+      "Description": "Active crisis / withdrawal distress"
+    }
+  ],
+  "dataset_stats": {
+    "total_reviews": 2838,
+    "high_risk_count": 692,
+    "high_risk_pct": 24.4,
+    "train_size": 2270,
+    "test_size": 568
+  }
+}

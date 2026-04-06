@@ -1,0 +1,16 @@
+# UI & Visualizations
+streamlit
+plotly
+
+# Data Manipulation & Processing
+pandas
+numpy
+pyarrow
+fastparquet
+
+# Machine Learning & AI
+scikit-learn
+sentence-transformers
+chromadb
+langchain
+langchain-ollama

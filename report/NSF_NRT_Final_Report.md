@@ -1,7 +1,7 @@
 # Nexus-Cortex: AI-Driven Substance Abuse Risk Detection and Surveillance Platform
 
 **NSF NRT — Substance Abuse Risk Detection Project**
-**Author:** Krutarth Lad
+**Author:** Krutarth Lad, Prathyu Adari
 **Date:** April 2025
 
 ---
